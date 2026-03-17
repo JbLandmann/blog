@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, author, image, tags } = post.data;
+
+const formattedDate = pubDate.toLocaleDateString('fr-FR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpdate = updatedDate?.toLocaleDateString('fr-FR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base
+  title={title}
+  description={description}
+  image={image?.src}
+  article={true}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  author={author}
+  tags={tags}
+>
+  <article>
+    <header class="article-header">
+      <div class="post-meta">
+        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+        {updatedDate && (
+          <span>· Mis à jour le {formattedUpdate}</span>
+        )}
+      </div>
+      <h1>{title}</h1>
+      <p class="post-description">{description}</p>
+      {tags.length > 0 && (
+        <div class="post-tags">
+          {tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      )}
+    </header>
+
+    {image && (
+      <img
+        src={image.src}
+        alt={image.alt}
+        width="720"
+        height="400"
+        loading="eager"
+      />
+    )}
+
+    <div class="article-content">
+      <slot />
+    </div>
+  </article>
+</Base>
