@@ -14,5 +14,10 @@
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.2.1",
     "astro": "^4.16.19"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.2.1",
+    "tailwindcss": "^4.2.1"
   }
 }

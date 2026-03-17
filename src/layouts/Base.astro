@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title: string;
   description: string;
@@ -104,36 +106,38 @@ const siteName = 'JB Landmann';
       href={new URL('/blog/rss.xml', Astro.site)}
     />
 
-    <!-- Styles -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <style>
-      @import '../styles/global.css';
-    </style>
   </head>
-  <body>
-    <header class="site-header">
-      <div class="container">
-        <a href="/blog/" class="site-title">{siteName}</a>
-        <nav class="site-nav">
-          <a href="/blog/">Articles</a>
-          <a href="/blog/rss.xml">RSS</a>
+  <body class="min-h-screen bg-bg text-fg font-sans flex flex-col antialiased leading-relaxed">
+    <!-- Header -->
+    <header class="border-b border-border">
+      <div class="mx-auto max-w-[680px] px-5 py-4 flex items-center justify-between">
+        <a href="/blog/" class="text-fg-strong font-bold tracking-tight hover:text-accent transition-colors">
+          {siteName}
+        </a>
+        <nav class="flex items-center gap-6">
+          <a href="/blog/" class="text-sm text-fg-muted link-hover font-medium">Articles</a>
+          <a href="/blog/rss.xml" class="text-sm text-fg-muted link-hover font-medium">RSS</a>
         </nav>
       </div>
     </header>
 
-    <main>
-      <div class="container">
+    <!-- Main -->
+    <main class="flex-1 py-12 sm:py-16">
+      <div class="mx-auto max-w-[680px] px-5">
         <slot />
       </div>
     </main>
 
-    <footer class="site-footer">
-      <div class="container">
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-border">
+      <div class="mx-auto max-w-[680px] px-5 py-8 text-center text-xs text-fg-muted">
         <p>© {new Date().getFullYear()} {siteName}. Tous droits réservés.</p>
       </div>
     </footer>

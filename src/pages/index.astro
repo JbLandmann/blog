@@ -10,15 +10,21 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   title="Articles"
   description="Réflexions sur l'AI, l'automatisation et les outils de développement."
 >
-  <h1>Articles</h1>
-  <p class="post-description" style="margin-bottom: 2rem;">
-    Réflexions sur l'AI, l'automatisation et les outils de développement.
-  </p>
+  <!-- Hero -->
+  <div class="mb-12">
+    <h1 class="text-3xl sm:text-4xl font-bold text-fg-strong tracking-tight mb-3">
+      Articles
+    </h1>
+    <p class="text-lg text-fg-muted leading-relaxed">
+      Réflexions sur l'AI, l'automatisation et les outils de développement.
+    </p>
+  </div>
 
+  <!-- Post list -->
   {posts.length === 0 ? (
-    <p class="post-description">Aucun article pour le moment. Revenez bientôt !</p>
+    <p class="text-fg-muted">Aucun article pour le moment. Revenez bientôt !</p>
   ) : (
-    <ul class="post-list">
+    <div class="flex flex-col divide-y divide-border">
       {posts.map((post) => {
         const formattedDate = post.data.pubDate.toLocaleDateString('fr-FR', {
           year: 'numeric',
@@ -26,26 +32,36 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           day: 'numeric',
         });
         return (
-          <li class="post-card">
-            <a href={`/blog/blog/${post.slug}/`}>
-              <div class="post-meta">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {formattedDate}
-                </time>
+          <a
+            href={`/blog/blog/${post.slug}/`}
+            class="group block py-6 first:pt-0 -mx-4 px-4 rounded-lg hover:bg-surface-hover transition-colors"
+          >
+            <div class="text-sm text-fg-muted mb-2">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formattedDate}
+              </time>
+            </div>
+
+            <h2 class="text-xl font-semibold text-fg-strong tracking-tight mb-2 group-hover:text-accent transition-colors">
+              {post.data.title}
+            </h2>
+
+            <p class="text-fg-muted leading-relaxed mb-3">
+              {post.data.description}
+            </p>
+
+            {post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5">
+                {post.data.tags.map((tag) => (
+                  <span class="text-xs font-medium text-accent bg-accent-muted px-2 py-0.5 rounded-md">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <h2 class="post-title">{post.data.title}</h2>
-              <p class="post-description">{post.data.description}</p>
-              {post.data.tags.length > 0 && (
-                <div class="post-tags">
-                  {post.data.tags.map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-            </a>
-          </li>
+            )}
+          </a>
         );
       })}
-    </ul>
+    </div>
   )}
 </Base>

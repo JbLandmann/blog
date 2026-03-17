@@ -33,34 +33,65 @@ const formattedUpdate = updatedDate?.toLocaleDateString('fr-FR', {
   tags={tags}
 >
   <article>
-    <header class="article-header">
-      <div class="post-meta">
+    <!-- Back link -->
+    <a
+      href="/blog/"
+      class="inline-flex items-center gap-1.5 text-sm text-fg-muted link-hover mb-8 group"
+    >
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      Retour aux articles
+    </a>
+
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-3 text-sm text-fg-muted mb-4">
         <time datetime={pubDate.toISOString()}>{formattedDate}</time>
         {updatedDate && (
-          <span>· Mis à jour le {formattedUpdate}</span>
+          <span class="text-fg-muted/60">·</span>
+          <span>Mis à jour le {formattedUpdate}</span>
         )}
       </div>
-      <h1>{title}</h1>
-      <p class="post-description">{description}</p>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-fg-strong tracking-tight leading-tight mb-4">
+        {title}
+      </h1>
+
+      <p class="text-lg text-fg-muted leading-relaxed">
+        {description}
+      </p>
+
       {tags.length > 0 && (
-        <div class="post-tags">
-          {tags.map((tag) => <span class="tag">{tag}</span>)}
+        <div class="flex flex-wrap gap-2 mt-5">
+          {tags.map((tag) => (
+            <span class="text-xs font-medium text-accent bg-accent-muted px-2.5 py-1 rounded-md">
+              {tag}
+            </span>
+          ))}
         </div>
       )}
     </header>
 
+    <!-- Cover image -->
     {image && (
       <img
         src={image.src}
         alt={image.alt}
-        width="720"
-        height="400"
+        width="680"
+        height="380"
         loading="eager"
+        class="rounded-xl mb-10 w-full object-cover"
       />
     )}
 
-    <div class="article-content">
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
       <slot />
+    </div>
+
+    <!-- Footer separator -->
+    <hr class="border-border mt-16 mb-8" />
+    <div class="text-sm text-fg-muted">
+      Publié par <span class="text-fg-strong font-medium">{author}</span>
     </div>
   </article>
 </Base>
