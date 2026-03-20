@@ -1,6 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Base from './Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import TagList from '../components/TagList.astro';
+import CoverImage from '../components/CoverImage.astro';
+import { formatDate } from '../lib/content';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -9,24 +13,14 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, author, image, tags } = post.data;
 
-const formattedDate = pubDate.toLocaleDateString('fr-FR', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-
-const formattedUpdate = updatedDate?.toLocaleDateString('fr-FR', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const formattedUpdate = updatedDate ? formatDate(updatedDate) : undefined;
 ---
 
 <Base
   title={title}
   description={description}
   image={image?.src}
-  article={true}
+  type="article"
   pubDate={pubDate}
   updatedDate={updatedDate}
   author={author}
@@ -45,7 +39,7 @@ const formattedUpdate = updatedDate?.toLocaleDateString('fr-FR', {
     <!-- Header -->
     <header class="mb-10">
       <div class="flex items-center gap-3 text-sm text-fg-muted mb-4">
-        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+        <FormattedDate date={pubDate} />
         {updatedDate && (
           <span class="text-fg-muted/60">·</span>
           <span>Mis à jour le {formattedUpdate}</span>
@@ -60,28 +54,11 @@ const formattedUpdate = updatedDate?.toLocaleDateString('fr-FR', {
         {description}
       </p>
 
-      {tags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mt-5">
-          {tags.map((tag) => (
-            <span class="text-xs font-medium text-accent bg-accent-muted px-2.5 py-1 rounded-md">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <TagList tags={tags} size="base" class="mt-5" />
     </header>
 
     <!-- Cover image -->
-    {image && (
-      <img
-        src={image.src}
-        alt={image.alt}
-        width="680"
-        height="380"
-        loading="eager"
-        class="rounded-xl mb-10 w-full object-cover"
-      />
-    )}
+    {image && <CoverImage image={image} variant="hero" />}
 
     <!-- Content -->
     <div class="prose prose-lg max-w-none">

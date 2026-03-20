@@ -1,0 +1,25 @@
+---
+interface Props {
+  image: { src: string; alt: string };
+  variant: 'card' | 'hero';
+  class?: string;
+}
+
+const { image, variant, class: className } = Astro.props;
+
+const variantConfig = {
+  card: { width: 680, height: 340, loading: 'lazy' as const, base: 'rounded-lg mb-4 w-full h-44 object-cover' },
+  hero: { width: 680, height: 380, loading: 'eager' as const, base: 'rounded-xl mb-10 w-full object-cover' },
+} as const;
+
+const config = variantConfig[variant];
+---
+
+<img
+  src={image.src}
+  alt={image.alt}
+  width={config.width}
+  height={config.height}
+  loading={config.loading}
+  class:list={[config.base, className]}
+/>

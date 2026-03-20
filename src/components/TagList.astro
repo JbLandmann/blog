@@ -1,0 +1,25 @@
+---
+interface Props {
+  tags: string[];
+  size?: 'sm' | 'base';
+  class?: string;
+}
+
+const { tags, size = 'sm', class: className } = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-2 py-0.5',
+  base: 'px-2.5 py-1',
+} as const;
+---
+
+{tags.length > 0 && (
+  <div class:list={['flex flex-wrap gap-1.5', className]}>
+    {tags.map((tag) => (
+      <span class:list={[
+        'text-xs font-medium text-accent bg-accent-muted rounded-md',
+        sizeClasses[size],
+      ]}>{tag}</span>
+    ))}
+  </div>
+)}

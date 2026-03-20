@@ -1,20 +1,20 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { getPublishedPosts, sortByDateDesc, postUrl } from '../lib/content';
+import { DEFAULT_CONFIG } from '../lib/seo/config';
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection('blog', ({ data }) => !data.draft))
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const posts = sortByDateDesc(await getPublishedPosts());
 
   return rss({
-    title: 'JB Landmann — Blog',
+    title: `${DEFAULT_CONFIG.siteName} — Blog`,
     description: 'Réflexions sur l\'AI, l\'automatisation et les outils de développement.',
     site: context.site!.href,
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/blog/blog/${post.slug}/`,
+      link: postUrl(post),
     })),
     customData: '<language>fr-FR</language>',
   });
