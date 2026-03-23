@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import TagList from '../components/TagList.astro';
-import CoverImage from '../components/CoverImage.astro';
-import { getPublishedPosts, sortByDateDesc, postUrl } from '../lib/content';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts, sortByDateDesc } from '../lib/content';
 
 const posts = sortByDateDesc(await getPublishedPosts());
 ---
@@ -29,28 +27,7 @@ const posts = sortByDateDesc(await getPublishedPosts());
   ) : (
     <div class="flex flex-col divide-y divide-border">
       {posts.map((post) => (
-          <a
-            href={postUrl(post)}
-            class="group block py-6 first:pt-0 -mx-4 px-4 rounded-lg hover:bg-surface-hover transition-colors"
-          >
-            {post.data.image && (
-              <CoverImage image={post.data.image} variant="card" />
-            )}
-
-            <div class="text-sm text-fg-muted mb-2">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-
-            <h2 class="text-xl font-semibold text-fg-strong tracking-tight mb-2 group-hover:text-accent transition-colors">
-              {post.data.title}
-            </h2>
-
-            <p class="text-fg-muted leading-relaxed mb-3">
-              {post.data.description}
-            </p>
-
-            <TagList tags={post.data.tags} size="sm" />
-          </a>
+        <PostCard post={post} />
       ))}
     </div>
   )}
