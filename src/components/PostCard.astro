@@ -1,0 +1,40 @@
+---
+import type { BlogPost } from '../lib/content';
+import { postUrl } from '../lib/content';
+import FormattedDate from './FormattedDate.astro';
+import CoverImage from './CoverImage.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: BlogPost;
+  class?: string;
+}
+
+const { post, class: className } = Astro.props;
+---
+
+<a
+  href={postUrl(post)}
+  class:list={[
+    'group block py-6 first:pt-0 -mx-4 px-4 rounded-lg hover:bg-surface-hover transition-colors',
+    className,
+  ]}
+>
+  {post.data.image && (
+    <CoverImage image={post.data.image} variant="card" />
+  )}
+
+  <div class="text-sm text-fg-muted mb-2">
+    <FormattedDate date={post.data.pubDate} />
+  </div>
+
+  <h2 class="text-xl font-semibold text-fg-strong tracking-tight mb-2 group-hover:text-accent transition-colors">
+    {post.data.title}
+  </h2>
+
+  <p class="text-fg-muted leading-relaxed mb-3">
+    {post.data.description}
+  </p>
+
+  <TagList tags={post.data.tags} size="sm" />
+</a>
