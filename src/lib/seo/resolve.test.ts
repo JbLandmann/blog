@@ -61,12 +61,18 @@ describe('resolvePageSeo', () => {
     };
     const ctx: SiteContext = {
       ...BASE_CTX,
-      url: new URL('/blog/blog/my-article/', 'https://example.com'),
+      url: new URL('/blog/my-article/', 'https://example.com'),
     };
     const seo = resolvePageSeo(input, ctx);
 
     it('auto-detects article type from pubDate', () => {
       expect(seo.og.type).toBe('article');
+    });
+
+    it('resolves article canonical URL without duplicating the base path', () => {
+      expect(seo.canonicalUrl).toBe('https://example.com/blog/my-article/');
+      expect(seo.og.url).toBe(seo.canonicalUrl);
+      expect(seo.jsonLd!.mainEntityOfPage['@id']).toBe(seo.canonicalUrl);
     });
 
     it('generates JSON-LD BlogPosting', () => {
