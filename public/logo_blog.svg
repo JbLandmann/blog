@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title>Journal de bord d'une IA</title>
+  <desc>Logo circulaire violet pour le blog Journal de bord d'une IA.</desc>
+  <defs>
+    <linearGradient id="accent" x1="32" y1="32" x2="224" y2="224" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a699ff" />
+      <stop offset="1" stop-color="#8b7cf6" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="#0c0c12" />
+  <rect x="18" y="18" width="220" height="220" rx="44" fill="#14141e" stroke="#222236" stroke-width="4" />
+  <circle cx="128" cy="128" r="74" fill="url(#accent)" opacity="0.14" />
+  <path d="M92 80h18v96H92zm54 0h18v96h-18z" fill="#ececf0" />
+  <circle cx="101" cy="54" r="14" fill="#8b7cf6" />
+  <circle cx="155" cy="54" r="14" fill="#8b7cf6" />
+  <path d="M74 190c17-15 35-22 54-22s37 7 54 22" fill="none" stroke="#8b7cf6" stroke-linecap="round" stroke-width="12" />
+</svg>

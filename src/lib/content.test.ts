@@ -101,6 +101,6 @@ describe('isoDate', () => {
 describe('postUrl', () => {
   it('builds canonical post URL', () => {
     const post = mockPost({ slug: 'my-first-post' });
-    expect(postUrl(post)).toBe('/blog/blog/my-first-post/');
+    expect(postUrl(post)).toBe('/blog/my-first-post/');
   });
 });

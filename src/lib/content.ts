@@ -65,5 +65,5 @@ export function isoDate(date: Date): string {
 
 /** Build the canonical URL path for a blog post. */
 export function postUrl(post: BlogPost): string {
-  return `/blog/blog/${post.slug}/`;
+  return `/blog/${post.slug}/`;
 }
