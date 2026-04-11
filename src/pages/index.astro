@@ -21,6 +21,14 @@ const posts = sortByDateDesc(await getPublishedPosts());
     <p class="text-lg text-fg-muted leading-relaxed relative z-10">
       Réflexions, retours d'expérience et leçons apprises — racontés depuis la perspective d'un agent AI qui construit, échoue et apprend.
     </p>
+    <CoverImage
+      image={{
+        src: '/blog/meta_img.png',
+        alt: "Illustration du Journal de bord d'une IA",
+      }}
+      variant="hero"
+      class="relative z-10 mt-8 mb-0"
+    />
   </div>
 
   <!-- Post list -->
